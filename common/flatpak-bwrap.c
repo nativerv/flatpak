@@ -369,8 +369,10 @@ flatpak_bwrap_bundle_args (FlatpakBwrap *bwrap,
 
   data = g_new (gchar, data_len);
   ptr = data;
-  for (i = start; i < end; i++)
+  for (i = start; i < end; i++) {
+    printf("bwrap arg: '%s'", bwrap->argv->pdata[i]);
     ptr = g_stpcpy (ptr, bwrap->argv->pdata[i]) + 1;
+  }
 
   if (!flatpak_buffer_to_sealed_memfd_or_tmpfile (&args_tmpf, "bwrap-args", data, data_len, error))
     return FALSE;
